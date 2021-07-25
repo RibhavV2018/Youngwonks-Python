@@ -1,114 +1,46 @@
-'''
-Algorithms
-'''
 import time
 import random
-
 '''
-Bubble Sort
+Linear Search
 
 Runtime:
-The bubble sort algorithm looks at each number in the list one at a time. Then,
-it compares that number to the element one index in front. If the number in
-front is smaller, they are switched. Otherwise, they stay the same. It does this
-for each number in the list, and when it reaches the end, the list is sorted.
+Linear search takes every number in the list, and checks if it is equal to the
+entered number. It repeats this until the number is found in the list.
+
 '''
-def bubbleSort(listThree):
+
+
+def linearSearch(t, l):
     start = time.time()
-    FLAG = 0
-    while FLAG == 0:
-        FLAG = 1
-        check = listThree
-        for i in range(len(listThree)-1):
-            a = listThree[i]
-            b = listThree[i+1]
-            if a > b:
-                FLAG = 0
-                listThree[i], listThree[i+1] = listThree[i+1],listThree[i]
-    end = time.time()  
-    return (True, [start, end], listThree)
+    for num in l:
+        if num == t:
+            end = time.time()
+            return (True, [start, end], l.index(num))
+    return None
 
 
 '''
-Selection Sort
+Bianary Search
 
 Runtime:
-The selection sort algorithm splits the  list into a sorted and unsorted list.
-For each number(lets call this x) in the list, starting at index 0, it finds the
-smallest number, and switches it with x. Then, that number is part of the
-sorted list. This proccess is repeated for every number in the list, until the
-list is sorted.
+Binary search takes the list,which it assumes is sorted ,and finds the mid
+point. If the number at the mid point is equal to the entered number,
+then it returns that number. If the mid point is greater than the entered
+number, it repeats the proccess again, but with the bottom half of the list. If
+the mid point is smaller than the entered number, than  it repeats the proccess
+with the top half of the list. This is repeted until the number is found.
 '''
-def selectionSort(listFour):
+def binarySearch(listTwo,x, high, low):
+
     start = time.time()
-    smallestNum = 0
-    for i in range(len(listFour)):
-        for x in range(i + 1, len(listFour)):
-            if listFour[smallestNum] > listFour[x]:
-                smallestNum = x
-
-        listFour[i], listFour[smallestNum] = listFour[smallestNum], listFour[i]
-    end = time.time()
-    return (True, [start, end], listFour)
-
-
-'''  
-Insertion Sort
-
-Runtime:
-Insertion sort takes the second number in the list, and compares it with the
-number to the left of it. If the number is smaller than the first number, then
-they switch. Otherwise, they stay the same. Then, it does the same thing with
-third number. If it is the smallest number out of the three, it is moved to the
-beginning. If it is the second smallest, it is moved to index 1. This proccess
-is repeated for every number, until the list is sorted.
-'''
-
-def insertionSort(listFive):
-    start = time.time()
-    for i in range(1, len(listFive)):
-        key = listFive[i]
-        numLess = i-1
-        while numLess >=0 and key < listFive[numLess]:
-            listFive[numLess+1] = listFive[numLess]
-            numLess -= 1
-        listFive[numLess+1] = key
-    end = time.time()
-    return (True, [start, end], listFive)
-
-
-
-
-def mergeSort(listSix):
-    if len(listSix)>1:
-        mid = len(listSix)//2
-        top = listSix[mid:]
-        bottom = listSix[:mid]
-
-        mergeSort(top)
-        mergeSort(bottom)
-
-        stepOne, stepTwo, stepThree = 0,0,0
-
-        while stepOne < len(top) and stepTwo < len(bottom):
-            if top[stepOne] < bottom[stepTwo]:
-                listSix[stepThree] = top[stepTwo]
-                stepOne+=1
-            else:
-                listSix[stepThree] = bottom[stepTwo]
-                stepTwo+=1
-            stepThree+=1
-
-        while stepOne<len(top):
-            listSix[stepThree] = top[stepOne]
-            stepOne+=1
-            stepThree+=1
-        while stepTwo<len(bottom):
-            listSix[stepThree] = bottom[stepTwo]
-            stepTwo+=1
-            stepThree+=1
-
-listSix = [9, 8, 7, 5, 6, 2, 3, 4, 1, 10]
-print(listSix)
-mergeSort(listSix)
-print(listSix)
+    if high>=low:
+        mid = (high + low)//2
+        if listTwo[mid] == x:
+            end = time.time()
+            return (True, [start, end], mid)
+        elif listTwo[mid] > x:
+            return binarySearch(listTwo, x, mid-1, low)
+        elif listTwo[mid] < x:
+            return binarySearch(listTwo, x, high, mid+1)
+    else:
+        return None
